@@ -5,24 +5,24 @@
         <div class="flex">
             <!-- Navigation Links -->
             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex items-center ">
-                <x-nav-link :href="route('welcome')" :active="request()->routeIs('welcome')" class="group">
+                <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="group">
                     {{ __('Dashboard') }}
                 </x-nav-link>
 
                 <x-nav-link :href="route('welcome')" :active="request()->routeIs('welcome')" class="group">
                     {{ __('Listings') }}
                 </x-nav-link>
-                <x-nav-link :href="route('welcome')" :active="request()->routeIs('welcome')" class="group">
+                <x-nav-link :href="route('pricing')" :active="request()->routeIs('pricing')" class="group">
                     {{ __('Pricing') }}
                 </x-nav-link>
 
-                <x-nav-link :href="route('welcome')" :active="request()->routeIs('welcome')" class="group">
+                <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')" class="group">
                     {{ __('Users') }}
                 </x-nav-link>
-                <x-nav-link :href="route('welcome')" :active="request()->routeIs('welcome')" class="group">
+                <x-nav-link :href="route('about')" :active="request()->routeIs('about')" class="group">
                     {{ __('About') }}
                 </x-nav-link>
-                <x-nav-link :href="route('welcome')" :active="request()->routeIs('welcome')" class="group">
+                <x-nav-link :href="route('contact-us')" :active="request()->routeIs('contact-us')" class="group">
                     {{ __('Contact Us') }}
                 </x-nav-link>
             </div>
@@ -96,7 +96,7 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden w-full">
         <div class="group pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('welcome')" :active="request()->routeIs('welcome')"
+            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')"
                                    class="focus:border-yellow-500">
                 <i class="fa fa-computer mr-2 text-lg group-hover:text-yellow-400"></i>
                 {{ __('Dashboard') }}
@@ -106,20 +106,20 @@
                 <i class="fa fa-list mr-2 text-lg group-hover:text-yellow-400"></i>
                 {{ __('Listings') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('welcome')" :active="request()->routeIs('/')">
+            <x-responsive-nav-link :href="route('pricing')" :active="request()->routeIs('pricing')">
                 <i class="fa fa-tag mr-2 text-lg group-hover:text-yellow-400"></i>
                 {{ __('Pricing') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('welcome')" :active="request()->routeIs('welcome')"
+            <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')"
                                    class="focus:border-yellow-500">
                 <i class="fa fa-users mr-2 text-lg group-hover:text-yellow-400"></i>
                 {{ __('Users') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('welcome')" :active="request()->routeIs('welcome')">
+            <x-responsive-nav-link :href="route('about')" :active="request()->routeIs('about')">
                 <i class="fa fa-qrcode mr-2 text-lg group-hover:text-yellow-400"></i>
                 {{ __('About') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('welcome')" :active="request()->routeIs('welcome')">
+            <x-responsive-nav-link :href="route('contact-us')" :active="request()->routeIs('contact-us')">
                 <i class="fa fa-address-card mr-2 text-lg group-hover:text-yellow-400"></i>
                 {{ __('Contact Us') }}
             </x-responsive-nav-link>
