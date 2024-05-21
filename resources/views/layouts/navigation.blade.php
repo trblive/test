@@ -9,7 +9,7 @@
                     {{ __('Dashboard') }}
                 </x-nav-link>
 
-                <x-nav-link :href="route('welcome')" :active="request()->routeIs('welcome')" class="group">
+                <x-nav-link :href="route('listings.index')" :active="request()->routeIs('listings.*')" class="group">
                     {{ __('Listings') }}
                 </x-nav-link>
                 <x-nav-link :href="route('pricing')" :active="request()->routeIs('pricing')" class="group">
@@ -101,7 +101,7 @@
                 <i class="fa fa-computer mr-2 text-lg group-hover:text-yellow-400"></i>
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('welcome')" :active="request()->routeIs('welcome')"
+            <x-responsive-nav-link :href="route('listings.index')" :active="request()->routeIs('listings.*')"
                                    class="focus:border-yellow-500">
                 <i class="fa fa-list mr-2 text-lg group-hover:text-yellow-400"></i>
                 {{ __('Listings') }}

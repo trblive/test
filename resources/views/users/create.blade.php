@@ -20,9 +20,6 @@
         @if($errors->count()>0)
             <section class="bg-red-200 text-red-800 mx-4 my-2 px-4 py-2 flex flex-col gap-1 rounded border-red-600">
                 <p>We have noted some data entry issues, please update and resubmit.</p>
-                {{--                @foreach($errors->all() as $error)--}}
-                {{--                    <p class="text-sm">{{ $error }}</p>--}}
-                {{--                @endforeach--}}
             </section>
         @endif
 

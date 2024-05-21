@@ -63,10 +63,8 @@
                         <i class="fa fa-trash text-lg"></i>
                         <span>Confirm</span>
                     </button>
-
                 </form>
             </div>
-
         </section>
     </article>
 </x-app-layout>

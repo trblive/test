@@ -161,7 +161,7 @@ class UserController extends Controller
     }
 
     /**
-     * Permanently remove user from the trash.
+     * Permanently remove user in the trash.
      *
      * @param $id
      * @return RedirectResponse
@@ -208,5 +208,4 @@ class UserController extends Controller
         return redirect(route('users.trash'))
             ->withSuccess("All users successfully restored.");
     }
-
 }
