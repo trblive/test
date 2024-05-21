@@ -31,7 +31,7 @@
                         {{ __('New User') }}
                     </a>
 
-                    <a href="/" class="p-2 px-4 text-center rounded-md h-10
+                    <a href="{{ route('users.trash') }}" class="p-2 px-4 text-center rounded-md h-10
 {{--                        @if($trashedCount>0)--}}
 {{--                            text-slate-200 hover:text-slate-600 bg-slate-600 hover:bg-slate-500--}}
 {{--                        @endif--}}
@@ -52,6 +52,8 @@
                 <tr class="bg-gray-400 text-gray-800 py-2 rounded-lg ">
                     <th class="pl-2 flex-0 text-left">Name</th>
                     <th class="text-left">Email</th>
+                    <th class="text-left">City</th>
+                    <th class="text-left">State</th>
                     <th class="text-left">Last Login</th>
                     <th class="pr-2 text-right">Actions</th>
                 </tr>
@@ -66,13 +68,13 @@
 
                         <td class="py-2 pl-2 flex-0 text-left">{{ $user->name }}</td>
                         <td class="py-2 text-left">{{ $user->email }}</td>
-                        <td class="py-2 text-left">{{ $user->updated_at }}</td>
+                        <td class="py-2 text-left">{{ $user->city ?? "---" }}</td>
+                        <td class="py-2 text-left">{{ $user->state ?? "---" }}</td>
+                        <td class="py-2 text-left">{{ $user->login_at }}</td>
                         <td class="py-2 pr-2 text-right">
                             <form class="flex flex-row gap-2 items-center justify-end"
-                                  action="{{ route('users.destroy', $user) }}"
-                                  method="POST">
-                                @csrf
-                                @method('delete')
+                                  action="{{ route('users.delete', $user) }}"
+                                  method="GET">
 
                                 <a href="{{ route('users.show', $user) }}"
                                    class="p-1 w-10 text-center rounded-md
@@ -102,7 +104,7 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                    <td colspan="4"
+                    <td colspan="6"
                         class="py-1 px-2 bg-gray-200 dark:bg-gray-700 border border-transparent border-t-gray-500">
                         {{ $users->links() }}
                     </td>
