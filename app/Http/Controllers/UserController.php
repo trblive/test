@@ -14,17 +14,18 @@ use Illuminate\View\View;
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a list of all registered users.
      */
     public function index(): View
     {
         $users = User::paginate(10);
-        return view('users.index', compact(['users']));
+        $trashedCount = User::onlyTrashed()->latest()->get()->count();
+        return view('users.index', compact(['users', 'trashedCount',]));
 
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for adding a new user.
      */
     public function create(): View
     {
@@ -32,7 +33,7 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created user in storage.
      */
     public function store(Request $request): RedirectResponse
     {
@@ -63,7 +64,7 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified user.
      */
     public function show(User $user): View
     {
@@ -71,7 +72,7 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified user.
      */
     public function edit(User $user): View
     {
@@ -79,7 +80,7 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified user in storage.
      */
     public function update(Request $request, User $user)
     {
@@ -118,7 +119,7 @@ class UserController extends Controller
     }
 
     /**
-     * Show form to confirm deletion of user resource from storage.
+     * Show form to confirm deletion of user from storage.
      */
     public function delete(User $user): View
     {
@@ -127,13 +128,13 @@ class UserController extends Controller
 
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified user from storage.
      */
     public function destroy(User $user): RedirectResponse
     {
         $user->delete();
-        return redirect(route('users.index'));
-
+        return redirect(route('users.index'))
+            ->withSuccess("{$user->name} moved to trash.");
     }
 
     /**
@@ -141,7 +142,7 @@ class UserController extends Controller
      */
     public function trash(): View
     {
-        $users = User::onlyTrashed()->latest()->get();
+        $users = User::onlyTrashed()->orderBy('deleted_at')->paginate(5);
         return view('users.trash', compact(['users']));
     }
 
@@ -155,7 +156,24 @@ class UserController extends Controller
     {
         $user = User::onlyTrashed()->find($id);
         $user->restore();
-        return redirect(route('users.trash'));
+        return redirect(route('users.trash'))
+            ->withSuccess("{$user->name} has been restored.");
+    }
+
+    /**
+     * Permanently remove user from the trash.
+     *
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function remove($id): RedirectResponse
+    {
+        $user = User::onlyTrashed()->find($id);
+        $oldUser = $user;
+        $user->forceDelete();
+        return redirect()
+            ->back()
+            ->withSuccess("{$oldUser->name} has been permanently deleted.");
     }
 
     /**
@@ -168,9 +186,10 @@ class UserController extends Controller
         $users = User::onlyTrashed()->get();
         $trashCount = $users->count();
         foreach ($users as $user) {
-            $user->forceDelete(); // This restores the soft-deleted user
+            $user->forceDelete();
         }
-        return redirect(route('users.trash'));
+        return redirect(route('users.trash'))
+            ->withSuccess("Trash emptied successfully.");
     }
 
     /**
@@ -184,9 +203,10 @@ class UserController extends Controller
         $trashCount = $users->count();
 
         foreach ($users as $user) {
-            $user->restore(); // This restores the soft-deleted user
+            $user->restore();
         }
-        return redirect(route('users.trash'));
+        return redirect(route('users.trash'))
+            ->withSuccess("All users successfully restored.");
     }
 
 }

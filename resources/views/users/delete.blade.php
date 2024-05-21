@@ -3,19 +3,10 @@
         <header
             class="py-4 bg-gray-600 text-gray-200 px-4 rounded-t-lg mb-4 flex flex-row justify-between items-center">
             <div>
-                <h2 class="text-3xl font-semibold">Delete User?</h2>
+                <h2 class="text-3xl font-semibold">Are you sure you want to delete {{ $user->name }}?</h2>
             </div>
             <i class="fa fa-user text-5xl"></i>
         </header>
-
-        @if(Session::has('success'))
-            <section id="Messages" class="my-4 px-4">
-                <div class="p-4 border-green-500 bg-green-100 text-green-700 rounded-lg">
-                    {{Session::get('success')}}
-                </div>
-            </section>
-        @endif
-
 
         @foreach($errors->all() as $error)
             <p>{{ $error }}</p>
@@ -36,22 +27,17 @@
 
             <div class="grid grid-cols-12">
                 <p class="col-span-12 md:col-span-2 xl:col-span-1 text-gray-500">City</p>
-                <p class="col-span-12 md:col-span-10 xl:col-span-11 ">{{ $user->city ?? "---" }}</p>
+                <p class="col-span-12 md:col-span-10 xl:col-span-11 ">{{ $user->city }}</p>
             </div>
 
             <div class="grid grid-cols-12">
                 <p class="col-span-12 md:col-span-2 xl:col-span-1 text-gray-500">State</p>
-                <p class="col-span-12 md:col-span-10 xl:col-span-11 ">{{ $user->state ?? "---" }}</p>
+                <p class="col-span-12 md:col-span-10 xl:col-span-11 ">{{ $user->state }}</p>
             </div>
 
             <div class="grid grid-cols-12">
                 <p class="col-span-12 md:col-span-2 xl:col-span-1 text-gray-500">Last Login</p>
                 <p class="col-span-12 md:col-span-10 xl:col-span-11  ">{{ $user->login_at ?? "---" }}</p>
-            </div>
-
-            <div class="grid grid-cols-12">
-                <p class="col-span-12 md:col-span-2 xl:col-span-1 text-gray-500">Status</p>
-                <p class="col-span-12 md:col-span-10 xl:col-span-11 ">{{ $user->status ?? "---" }}</p>
             </div>
 
             <div class="grid grid-cols-12">

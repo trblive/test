@@ -124,7 +124,6 @@
                 </tr>
                 </tfoot>
             </table>
-            </div>
 
         </section>
     </article>

@@ -9,13 +9,13 @@
             <i class="fa fa-users text-5xl"></i>
         </header>
 
-        {{--        @if(Session::has('success'))--}}
-        {{--            <section id="Messages" class="my-4 px-4">--}}
-        {{--                <div class="p-4 border-green-500 bg-green-100 text-green-700 rounded-lg">--}}
-        {{--                    {{Session::get('success')}}--}}
-        {{--                </div>--}}
-        {{--            </section>--}}
-        {{--        @endif--}}
+        @if(Session::has('success'))
+            <section id="Messages" class="my-4 px-4">
+                <div class="p-4 border-green-500 bg-green-100 text-green-700 rounded-lg">
+                    {{Session::get('success')}}
+                </div>
+            </section>
+        @endif
 
         <section class="px-4 pb-8">
             <header class="flex flex-row justify-between items-center gap-2">
@@ -31,14 +31,16 @@
                         {{ __('New User') }}
                     </a>
 
-                    <a href="{{ route('users.trash') }}" class="p-2 px-4 text-center rounded-md h-10
-{{--                        @if($trashedCount>0)--}}
-{{--                            text-slate-200 hover:text-slate-600 bg-slate-600 hover:bg-slate-500--}}
-{{--                        @endif--}}
-                        duration-300 ease-in-out transition-all space-x-2">
+                    <a href="{{ route('users.trash') }}"
+                       class="p-2 px-4 text-center rounded-md h-10
+                              @if($trashedCount>0)
+                              text-slate-200 hover:text-slate-600 bg-slate-600 hover:bg-slate-500
+                              @else
+                              text-slate-600 hover:text-slate-200 bg-slate-200 hover:bg-slate-500
+                              @endif
+                              duration-300 ease-in-out transition-all space-x-2">
                         <i class="fa fa-trash font-xl"></i>
-                        {{--                        {{ $trashedCount }} --}}
-                        {{ __('Deleted') }}
+                        {{ $trashedCount }} {{ __('Deleted') }}
                     </a>
                 </section>
             </header>
