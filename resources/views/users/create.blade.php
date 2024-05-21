@@ -67,7 +67,7 @@
                            for="City">City:</label>
                     <input type="text"
                            id="City"
-                           name="email"
+                           name="city"
                            value="{{ old('city') }}"
                            placeholder="Enter city"
                            class="border-gray-200 col-span-5">
@@ -81,7 +81,7 @@
                            for="State">State:</label>
                     <input type="text"
                            id="State"
-                           name="email"
+                           name="state"
                            value="{{ old('state') }}"
                            placeholder="Enter state"
                            class="border-gray-200 col-span-5">

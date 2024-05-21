@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
@@ -39,19 +40,21 @@ class UserController extends Controller
         $rules = [
             'name' => ['required', 'string', 'min:3', 'max:128'],
             'email' => ['required', 'email:rfc', 'unique:users'],
-            'city' => ['nullable', 'string'],
-            'state' => ['nullable', 'string'],
-            'password' => ['required', 'confirmed', Password::min(4)->letters(),],
+            'city' => ['required', 'string', 'min:3', 'max:128'],
+            'state' => ['required', 'string', 'min:2', 'max:128'],
+            'password' => ['required', 'confirmed', Password::min(4)->letters()],
         ];
         $validated = $request->validate($rules);
 
         // Store
-        $user = User::create([
+        $user = User::create(
+            [
                 'name' => $validated['name'],
                 'email' => $validated['email'],
-                'city' => $validated['city'],
-                'state' => $validated['state'],
                 'password' => Hash::make($validated['password']),
+                'remember_token' => Str::random(10),
+                'city' => $validated['city'],
+                'state' => $validated['state']
             ]
         );
 
@@ -88,49 +91,26 @@ class UserController extends Controller
 
         // Validate
         $rules = [
-            'name' => [
-                'string',
-                'required',
-                'min:3',
-                'max:128'
-            ],
-            'email' => [
-                'required',
-                'email:rfc',
-                Rule::unique('users')->ignore($user),
-            ],
-            'city' => [
-                'nullable',
-                'string',
-            ],
-            'state' => [
-                'nullable',
-                'string',
-            ],
-            'password' => [
-                'sometimes',
-                'confirmed',
-                Password::min(4)->letters(),
-            ],
-            'password_confirmation' => [
-                'sometimes',
-                'required_unless:password,null',
-            ],
+            'name' => ['string', 'required', 'min:3', 'max:128'],
+            'email' => ['required', 'email:rfc', Rule::unique('users')->ignore($user)],
+            'city' => ['required', 'string', 'min:3', 'max:128'],
+            'state' => ['required', 'string', 'min:2', 'max:128'],
+            'password' => ['sometimes', 'confirmed', Password::min(4)->letters()],
+            'password_confirmation' => ['sometimes', 'required_unless:password,null'],
 
         ];
         $validated = $request->validate($rules);
 
         // Store
         $user->update(
-            $validated
-//            [
-//                'name' => $validated['name'],
-//                'email' => $validated['email'],
-//                'city' => $validated['city'],
-//                'state' => $validated['state'],
-//                'password' => $validated['password'],
-//                'updated_at' => now(),
-//            ]
+            [
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'city' => $validated['city'],
+                'state' => $validated['state'],
+                'password' => !empty($validated['password']) ? $validated['password'] : $user['password'],
+                'updated_at' => now(),
+            ]
         );
 
         return redirect(route('users.show', $user))
