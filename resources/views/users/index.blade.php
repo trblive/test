@@ -104,9 +104,13 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                    <td colspan="6"
-                        class="py-1 px-2 bg-gray-200 dark:bg-gray-700 border border-transparent border-t-gray-500">
-                        {{ $users->links() }}
+                    <td colspan="6" class="py-1 px-2 bg-gray-200 dark:bg-gray-700
+                                border border-transparent border-t-gray-500">
+                        @if($users->hasPages())
+                            {{ $users->links() }}
+                        @else
+                            <small>No pages</small>
+                        @endif
                     </td>
                 </tr>
                 </tfoot>

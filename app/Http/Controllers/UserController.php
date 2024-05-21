@@ -85,7 +85,7 @@ class UserController extends Controller
             unset($request['password']);
             unset($request['password_confirmation']);
         }
-        
+
         // Validate
         $rules = [
             'name' => [
