@@ -1,4 +1,5 @@
 # Workopia in Laravel 11
+
 <a name="readme-top"></a>
 
 (START)
@@ -6,7 +7,7 @@
 TO DO: Make sure the Repository is PRIVATE
 
 TO DO: Add Your lecturer as a contributor to the project repository, so
-they are able to see your code, the commit history and other details 
+they are able to see your code, the commit history and other details
 within the repository.
 
 TO DO: Add a one sentence overview/summary of this project.
@@ -16,6 +17,7 @@ Once complete, remove from `(START)` to `(END)`
 (END)
 
 #### Built With
+
 [![PHP][Php.com]][Php-url]
 [![Laravel][Laravel.com]][Laravel-url]
 [![Tailwindcss][Tailwindcss.com]][Tailwindcss-url]
@@ -43,21 +45,17 @@ TO DO: Add extra, or update the contents as needed, then remove this line.
 
 ## Definitions
 
-| Term | Definition                                                                                                  |
-|----|-------------------------------------------------------------------------------------------------------------|
-| BREAD | Database operations to Browse, Read, Edit, Add and Delete data                                               |
-| CRUD | More commonly used term over BREAD. Create (Add), Retrieve (Browse/Read), Update (Edit) and Delete (Delete) |
-
-TO DO: Add any extra definitions used in the document. For example, they 
-could include `MVC`, `HTTP VERB` and more.
+| Term  | Definition                                                                                                  |
+|-------|-------------------------------------------------------------------------------------------------------------|
+| BREAD | Database operations to Browse, Read, Edit, Add and Delete data                                              |
+| CRUD  | More commonly used term over BREAD. Create (Add), Retrieve (Browse/Read), Update (Edit) and Delete (Delete) |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
 ## Description
 
-TO DO: Provide a short description explaining the what, why, and how of your 
-project. 
+TO DO: Provide a short description explaining the what, why, and how of your
+project.
 
 Use the following questions as a guide:
 
@@ -74,17 +72,16 @@ Use the following questions as a guide:
 What are the steps required to install your project? Provide a step-by-step
 description of how to get the development environment running.
 
-Note this may be on a free hosting system using any suitable method you 
-wish. It also may be on a local machine where the project is cloned to the 
+Note this may be on a free hosting system using any suitable method you
+wish. It also may be on a local machine where the project is cloned to the
 local and then set up and run.
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
 ## Usage
 
-TO DO: Provide instructions and examples for use. Include screenshots as 
+TO DO: Provide instructions and examples for use. Include screenshots as
 needed.
 
 To add a screenshot, create an `assets/images` folder in your repository and
@@ -97,50 +94,30 @@ your README using the following syntax:
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
 ## Credits
 
-TO DO: List your collaborators, if any, with links to their GitHub 
-profiles. This should include the TAFE and your lecturers' GitHub profiles. 
+TO DO: List your collaborators, if any, with links to their GitHub
+profiles. This should include the TAFE and your lecturers' GitHub profiles.
 
 If you used any third-party assets that require attribution, list the creators
-with links to their primary web presence in this section. For example 
+with links to their primary web presence in this section. For example
 FontAwesome, TailwindCSS etc.
 
-If you followed tutorials, include links to those here as well. This would 
-include the Traversy Media course(s), YouTube videos, written tutorials 
-and books. 
+If you followed tutorials, include links to those here as well. This would
+include the Traversy Media course(s), YouTube videos, written tutorials
+and books.
 
+- [AdyGCode](https://github.com/AdyGCode)
+- PHP From Scratch. (2024). Traversymedia.com. https://www.traversymedia.com/php-from-scratch
 - Font Awesome. (n.d.). Fontawesome.com. https://fontawesome.com
 - Laravel - The PHP Framework For Web Artisans. (2011). Laravel.com. https://laravel.com
-- Laravel Bootcamp - Learn the PHP Framework for Web Artisans. (n.d.). Bootcamp.laravel.com. https://bootcamp.laravel.com/
+- Laravel Bootcamp - Learn the PHP Framework for Web Artisans. (n.d.).
+  Bootcamp.laravel.com. https://bootcamp.laravel.com/
 - PHP: Hypertext Preprocessor. (n.d.). Www.php.net. https://php.net
-- Professional README Guide. (n.d.). Coding-Boot-Camp.github.io. Retrieved April 15, 2024, from https://coding-boot-camp.github.io/full-stack/github/professional-readme-guide
-- TailwindCSS. (2023). Tailwind CSS - Rapidly build modern websites 
+- Professional README Guide. (n.d.). Coding-Boot-Camp.github.io. Retrieved April 15, 2024,
+  from https://coding-boot-camp.github.io/full-stack/github/professional-readme-guide
+- TailwindCSS. (2023). Tailwind CSS - Rapidly build modern websites
   without ever leaving your HTML. Tailwindcss.com. https://tailwindcss.com/
-
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-## Badges
-
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
-***
-*** Forks, Issues and Licence Shields will NOT appear for Private Repos.
-*** You may want to remove this section for this assessment.
-*** Delete this block of comments once you have edited this ReadMe.
-***
-***
--->
-
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -149,16 +126,18 @@ and books.
 Workopia features include, but are not limited to:
 
 #### Work Listings
+
 Work listings have the usual CRUD/BREAD operations including:
 
 * Browse Listings [Guest, User, Admin]
 * Retrieve Listing [Guest, User, Admin]
-    * includes search 
+    * includes search
 * Edit Listing [Admin, Owner]
 * Update Listing [Admin, Owner]
 * Delete Listing [Admin, Owner]
 
 #### Users
+
 * User self registration [Guest]
 * Login [Registered User]
 * Logout [Registered User]
@@ -166,6 +145,7 @@ Work listings have the usual CRUD/BREAD operations including:
 * Account admin [Admin, Owner]
 
 #### Administration
+
 * Work BREAD [Admin]
 * User BREAD [Admin]
 * Permissions Admin [Admin]
@@ -179,16 +159,11 @@ Go the extra mile and write tests for your application. Then provide examples on
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
 ## Contact
 
-Your Name - @twitter_handle - email@email_client.com
-
-Project Link: https://github.com/github_username/repo_name
+Project Link: https://github.com/trblive/SaaS-FED-POR-Pt2-AA/
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 ## Licence
 
@@ -205,12 +180,6 @@ to [https://choosealicense.com/](https://choosealicense.com/).
 
 
 ---
-
-
-
-TO DO: Update the links in the MarkDown Links and Images section of the 
-original MarkDown document as needed. The links are not visible in the 
-rendered page on GitHub. 
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
@@ -264,3 +233,8 @@ rendered page on GitHub.
 [SQLite.com]: https://img.shields.io/badge/sqlite-003B57?style=for-the-badge&logo=sqlite
 
 [SQLite-url]: https://www.sqlite.org/
+
+[Docker.com]: https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=docker&logoColor=white
+
+[Docker-url]: https://www.docker.com/
+

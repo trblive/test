@@ -1,20 +1,40 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StaticPageController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
+// static pages
 Route::get('/', [StaticPageController::class, 'welcome'])->name('home');
 Route::get('/welcome', [StaticPageController::class, 'welcome'])->name('welcome');
 Route::get('/about', [StaticPageController::class, 'about'])->name('about');
 Route::get('/contact-us', [StaticPageController::class, 'contact_us'])->name('contact-us');
 Route::get('/pricing', [StaticPageController::class, 'pricing'])->name('pricing');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// user dashboard
+Route::middleware(['auth', 'verified'])->group(function () {
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/profile', [DashboardController::class, 'show'])->name('dashboard.show');
+    Route::get('/dashboard/profile/edit', [DashboardController::class, 'edit'])->name('dashboard.edit');
+    Route::patch('/dashboard/profile', [DashboardController::class, 'update'])->name('dashboard.update');
+    Route::get('/dashboard/delete', [DashboardController::class, 'delete'])->name('dashboard.delete');
+    Route::delete('/dashboard', [DashboardController::class, 'destroy'])->name('dashboard.destroy');
+});
+
+// roles
+Route::middleware(['auth', 'verified'])->group(function () {
+
+    Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
+    Route::get('/roles/edit', [RoleController::class, 'edit'])->name('roles.edit');
+    Route::patch('/roles', [RoleController::class, 'update'])->name('roles.update');
+    Route::delete('/roles', [RoleController::class, 'destroy'])->name('destroy');
+});
+
 
 Route::middleware('auth')->group(function () {
     // profile
@@ -50,7 +70,6 @@ Route::middleware('auth')->group(function () {
     // recover/delete all listings
     Route::post('/listings/trash/recover', [ListingController::class, 'recoverAll'])->name('listings.trash-recover');
     Route::delete('/listings/trash/empty', [ListingController::class, 'empty'])->name('listings.trash-empty');
-
 
     // listing controller
     Route::resource('listings', ListingController::class);
