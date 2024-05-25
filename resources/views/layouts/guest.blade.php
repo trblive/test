@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8"/>
@@ -27,11 +27,10 @@
 @include('layouts.header')
 
 <!-- Nav -->
-@if(isset($navigation))
-    {{ $navigation }}
-@else
+{{--@if(isset($navigation))--}}
+{{--    {{ $navigation }}--}}
 
-@endif
+{{--@endif--}}
 
 @if (isset($showcase))
     {{ $showcase }}

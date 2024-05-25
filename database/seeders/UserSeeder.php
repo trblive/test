@@ -7,6 +7,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 class UserSeeder extends Seeder
 {
@@ -113,10 +114,15 @@ class UserSeeder extends Seeder
 
         ];
 
+        $adminRole = Role::whereName('Administrator')->get();
+        $clientRole = Role::whereName('Client')->get();
+
         $admin = User::create($defaultAdmin);
+        $admin->assignRole($adminRole);
 
         foreach ($seedUsers as $seedUser) {
             $user = User::create($seedUser);
+            $user->assignRole($clientRole);
         }
     }
 }

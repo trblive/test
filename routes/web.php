@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\RolesAndPermissionsController;
 use App\Http\Controllers\StaticPageController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -26,15 +27,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/dashboard', [DashboardController::class, 'destroy'])->name('dashboard.destroy');
 });
 
-// roles
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware('auth')->group(function () {
+    Route::resource('roles', RoleController::class);
 
-    Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
-    Route::get('/roles/edit', [RoleController::class, 'edit'])->name('roles.edit');
-    Route::patch('/roles', [RoleController::class, 'update'])->name('roles.update');
-    Route::delete('/roles', [RoleController::class, 'destroy'])->name('destroy');
+
+    Route::post('/roles/{role}/assign-role', [RoleController::class, 'assign_role'])->name('roles.assign-role');
+    Route::delete('/roles/{role}/revoke-role', [RoleController::class, 'revoke_role'])->name('roles.revoke-role');
 });
-
 
 Route::middleware('auth')->group(function () {
     // profile
@@ -74,5 +73,17 @@ Route::middleware('auth')->group(function () {
     // listing controller
     Route::resource('listings', ListingController::class);
 });
+
+Route::middleware(['auth', 'verified', 'role:Administrator|Staff'])->group(function () {
+    Route::get('/permissions', [RolesAndPermissionsController::class, 'index'])
+        ->name('admin.permissions');
+
+    Route::post('/assign_role', [RolesAndPermissionsController::class, 'store'])
+        ->name('admin.assign-role');
+
+    Route::delete('/revoke_role', [RolesAndPermissionsController::class, 'destroy'])
+        ->name('admin.revoke-role');
+});
+
 
 require __DIR__ . '/auth.php';

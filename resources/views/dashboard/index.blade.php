@@ -97,7 +97,7 @@
                             <span class="font-bold"></span>
                             <span class="text-gray-500 text-sm">Roles</span>
                         </p>
-                        <a href="#"
+                        <a href="{{ route('roles.index') }}"
                            class="flex items-center gap-4 px-5 py-2.5 shadow-sm rounded border text-base font-medium text-blue-600 hover:text-white dark:hover:text-black bg-blue-200 dark:bg-black hover:bg-blue-500 duration-300 ease-in-out transition-all">
                             <span>View more</span>
                             <i class="fa-solid fa-chevron-right"></i>
