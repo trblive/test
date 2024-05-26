@@ -78,7 +78,7 @@ Recommended IDE: PHPStorm
 
 ## Usage
 
-Log in as Administrator with the details`email: admin@example.com, password: Password`, or register a new user profile.
+Log in as Administrator with the details `email: admin@example.com, password: Password`, or register a new user profile.
 
 ![Screenshot of Administrator dashboard](assets/images/screenshot.png)
 
