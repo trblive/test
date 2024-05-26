@@ -31,7 +31,8 @@
                   class="max-w-3xl flex flex-col gap-4">
 
                 @csrf
-
+                
+                <input type="hidden" name="user_id" value="{{ $user->id }}">
                 <fieldset class="grid grid-cols-7">
                     <label class="text-gray-500 col-span-2"
                            for="title">Title:</label>

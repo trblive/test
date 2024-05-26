@@ -83,20 +83,24 @@
                         <td class="py-2 text-left">{{ $user->name }}</td>
                         <td class="py-2 text-left">{{ $user->email }}</td>
                         <td class="py-2 pr-2 text-right">
-                            <form class="flex flex-row gap-2 items-center justify-end"
-                                  action="{{ route('roles.revoke-role', $role) }}"
-                                  method="POST">
-                                @csrf
-                                @method('delete')
-                                <input type="hidden" name="member_id" value="{{ $user->id }}">
-                                <button type="submit"
-                                        class="p-1 w-10 text-center rounded-md
-                                               text-red-600 hover:text-red-200 dark:hover:text-black bg-red-200 dark:bg-black hover:bg-red-500
-                                               duration-300 ease-in-out transition-all">
-                                    <i class="fa fa-trash text-lg"></i>
-                                    <span class="sr-only">Remove Assignee</span>
-                                </button>
-                            </form>
+                            @if($canEdit)
+                                @can('Role-Revoke')
+                                    <form class="flex flex-row gap-2 items-center justify-end"
+                                          action="{{ route('roles.revoke-role', $role) }}"
+                                          method="POST">
+                                        @csrf
+                                        @method('delete')
+                                        <input type="hidden" name="member_id" value="{{ $user->id }}">
+                                        <button type="submit"
+                                                class="p-1 w-10 text-center rounded-md
+                                                       text-red-600 hover:text-red-200 dark:hover:text-black bg-red-200 dark:bg-black hover:bg-red-500
+                                                       duration-300 ease-in-out transition-all">
+                                            <i class="fa fa-trash text-lg"></i>
+                                            <span class="sr-only">Remove Assignee</span>
+                                        </button>
+                                    </form>
+                                @endcan
+                            @endif
                         </td>
                     </tr>
                 @endforeach

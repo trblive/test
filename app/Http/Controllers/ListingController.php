@@ -2,40 +2,71 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Listings;
+use App\Models\User;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreListingsRequest;
 use App\Http\Requests\UpdateListingsRequest;
-use App\Models\Listings;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class ListingController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * @throws AuthorizationException
      */
     public function index(): View
     {
+        $this->authorize('viewAny', Listings::class);
+
         $listings = Listings::paginate(10);
-        $trashedCount = Listings::onlyTrashed()->latest()->get()->count();
-        return view('listings.index', compact(['listings', 'trashedCount']));
+
+        if (auth()->user()->hasRole('Client')) {
+            $trashedCount = Listings::onlyTrashed()->where('user_id', auth()->user()->id)->get()->count();
+        } else {
+            $trashedCount = Listings::onlyTrashed()->latest()->get()->count();
+        }
+
+        return view('listings.index', [
+            'listings' => $listings,
+            'trashedCount' => $trashedCount,
+            'canEdit' => auth()->user()->can(['Listing-Edit', 'Listing-Delete']),
+            'user' => auth()->user()
+        ]);
+    }
+
+    /**
+     * Display the specified resource.
+     * @throws AuthorizationException
+     */
+    public function show(Listings $listing): View
+    {
+        $this->authorize('view', $listing);
+
+        return view('listings.show', compact(['listing',]));
     }
 
     /**
      * Show the form for creating a new resource.
+     * @throws AuthorizationException
      */
     public function create(): View
     {
-        return view('listings.create');
+        $this->authorize('create', Listings::class);
+        $user = Auth::user();
+        return view('listings.create', compact('user'));
     }
 
     /**
      * Store a newly created resource in storage.
+     * @throws AuthorizationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(StoreListingsRequest $request): RedirectResponse
     {
+        $this->authorize('create', Listings::class);
+
         // Validate
         $rules = [
             'title' => ['string', 'required'],
@@ -53,50 +84,33 @@ class ListingController extends Controller
         ];
         $validated = $request->validate($rules);
 
+        //$user = User::find($request->input('user_id'));
+
         // store
-        $listing = Listings::create(
-            [
-                'title' => $validated['title'],
-                'description' => $validated['description'],
-                'salary' => $validated['salary'],
-                'tags' => $validated['tags'],
-                'company' => $validated['company'],
-                'address' => $validated['address'],
-                'city' => $validated['city'],
-                'state' => $validated['state'],
-                'phone' => $validated['phone'],
-                'email' => $validated['email'],
-                'requirements' => $validated['requirements'],
-                'benefits' => $validated['benefits'],
-                'updated_at' => now()
-            ]
-        );
+        $request->user()->listings()->create($validated);
 
-        return redirect(route('users.index'))
-            ->withSuccess("Added '{$listing->title}'.");
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Listings $listing): View
-    {
-        return view('listings.show', compact(['listing',]));
+        return redirect(route('listings.index'))
+            ->withSuccess("Added Listing.");
     }
 
     /**
      * Show the form for editing the specified resource.
+     * @throws AuthorizationException
      */
     public function edit(Listings $listing): View
     {
+        $this->authorize('update', $listing);
         return view('listings.edit', compact(['listing',]));
     }
 
     /**
      * Update the specified resource in storage.
+     * @throws AuthorizationException
      */
-    public function update(Request $request, Listings $listing)
+    public function update(UpdateListingsRequest $request, Listings $listing)
     {
+        $this->authorize('update', $listing);
+
         // Validate
         $rules = [
             'title' => ['string', 'required'],
@@ -139,17 +153,22 @@ class ListingController extends Controller
 
     /**
      * Show form to confirm deletion of user from storage.
+     * @throws AuthorizationException
      */
     public function delete(Listings $listing): View
     {
+        $this->authorize('delete', $listing);
         return view('listings.delete', compact(['listing',]));
     }
 
     /**
      * Remove the specified resource from storage.
+     * @throws AuthorizationException
      */
     public function destroy(Listings $listing)
     {
+        $this->authorize('delete', $listing);
+
         $listing->delete();
         return redirect(route('listings.index'))
             ->withSuccess("{$listing->title} moved to trash.");
@@ -160,7 +179,14 @@ class ListingController extends Controller
      */
     public function trash(): View
     {
-        $listings = Listings::onlyTrashed()->orderBy('deleted_at')->paginate(5);
+        $this->authorize('trash', Listings::class);
+
+        if (auth()->user()->hasRole('Client')) {
+            $listings = Listings::onlyTrashed()->where('user_id', auth()->user()->id)->orderBy('deleted_at')->paginate(5);
+        } else {
+            $listings = Listings::onlyTrashed()->orderBy('deleted_at')->paginate(5);
+        }
+
         return view('listings.trash', compact(['listings']));
     }
 
@@ -169,9 +195,12 @@ class ListingController extends Controller
      *
      * @param $id
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function restore($id): RedirectResponse
+    public function recover($id): RedirectResponse
     {
+        $this->authorize('recover', Listings::class);
+
         $listing = Listings::onlyTrashed()->find($id);
         $listing->restore();
         return redirect(route('listings.trash'))
@@ -183,9 +212,12 @@ class ListingController extends Controller
      *
      * @param $id
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function remove($id): RedirectResponse
     {
+        $this->authorize('remove', Listings::class);
+
         $listing = Listings::onlyTrashed()->find($id);
         $oldListing = $listing;
         $listing->forceDelete();
@@ -198,11 +230,15 @@ class ListingController extends Controller
      * Permanently remove all listings that are in the trash
      *
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function empty(): RedirectResponse
     {
+        $this->authorize('empty', Listings::class);
+
         $listings = Listings::onlyTrashed()->get();
         $trashCount = $listings->count();
+
         foreach ($listings as $listing) {
             $listing->forceDelete();
         }
@@ -214,9 +250,12 @@ class ListingController extends Controller
      * Restore all listings in the trash to system
      *
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
-    public function recoverAll(): RedirectResponse
+    public function restore(): RedirectResponse
     {
+        $this->authorize('restore', Listings::class);
+
         $listings = Listings::onlyTrashed()->get();
         $trashCount = $listings->count();
 

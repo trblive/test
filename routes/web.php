@@ -47,11 +47,11 @@ Route::middleware('auth')->group(function () {
     // trashed users
     Route::get('/users/trash', [UserController::class, 'trash'])->name('users.trash');
     // recover/delete single user
-    Route::get('/users/trash/{id}/restore', [UserController::class, 'restore'])->name('users.trash-restore');
+    Route::get('/users/trash/{id}/recover', [UserController::class, 'recover'])->name('users.trash-recover');
     Route::delete('/users/trash/{id}/remove', [UserController::class, 'remove'])->name('users.trash-remove');
 
-    // recover/delete all users
-    Route::post('/users/trash/recover', [UserController::class, 'recoverAll'])->name('users.trash-recover');
+    // restore/delete all users
+    Route::post('/users/trash/restore', [UserController::class, 'restore'])->name('users.trash-restore');
     Route::delete('/users/trash/empty', [UserController::class, 'empty'])->name('users.trash-empty');
 
     // user controller
@@ -63,11 +63,11 @@ Route::middleware('auth')->group(function () {
     // trashed listings
     Route::get('/listings/trash', [ListingController::class, 'trash'])->name('listings.trash');
     // recover/delete single listing
-    Route::get('/listings/trash/{id}/restore', [ListingController::class, 'restore'])->name('listings.trash-restore');
+    Route::get('/listings/trash/{id}/recover', [ListingController::class, 'recover'])->name('listings.trash-recover');
     Route::delete('/listings/trash/{id}/remove', [ListingController::class, 'remove'])->name('listings.trash-remove');
 
-    // recover/delete all listings
-    Route::post('/listings/trash/recover', [ListingController::class, 'recoverAll'])->name('listings.trash-recover');
+    // restore/delete all listings
+    Route::post('/listings/trash/restore', [ListingController::class, 'restore'])->name('listings.trash-restore');
     Route::delete('/listings/trash/empty', [ListingController::class, 'empty'])->name('listings.trash-empty');
 
     // listing controller

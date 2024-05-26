@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -18,6 +22,8 @@ class UserController extends Controller
      */
     public function index(): View
     {
+        $this->authorize('viewAny', User::class);
+
         $users = User::paginate(10);
         $trashedCount = User::onlyTrashed()->latest()->get()->count();
         return view('users.index', compact(['users', 'trashedCount',]));
@@ -25,18 +31,32 @@ class UserController extends Controller
     }
 
     /**
+     * Display the specified user.
+     */
+    public function show(User $user): View
+    {
+        $this->authorize('view', [User::class, $user]);
+        return view('users.show', compact(['user',]));
+    }
+
+    /**
      * Show the form for adding a new user.
+     * @throws AuthorizationException
      */
     public function create(): View
     {
+        $this->authorize('create', User::class);
         return view('users.create');
     }
 
     /**
      * Store a newly created user in storage.
+     * @throws AuthorizationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(StoreUserRequest $request): RedirectResponse
     {
+        $this->authorize('create', User::class);
+
         // Validate
         $rules = [
             'name' => ['required', 'string', 'min:3', 'max:128'],
@@ -64,26 +84,22 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified user.
-     */
-    public function show(User $user): View
-    {
-        return view('users.show', compact(['user',]));
-    }
-
-    /**
      * Show the form for editing the specified user.
+     * @throws AuthorizationException
      */
     public function edit(User $user): View
     {
+        $this->authorize('update', [User::class, $user]);
         return view('users.edit', compact(['user',]));
     }
 
     /**
      * Update the specified user in storage.
+     * @throws AuthorizationException
      */
-    public function update(Request $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
+        $this->authorize('update', [User::class, $user]);
 
         if (empty($request['password'])) {
             unset($request['password']);
@@ -120,9 +136,12 @@ class UserController extends Controller
 
     /**
      * Show form to confirm deletion of user from storage.
+     * @throws AuthorizationException
      */
     public function delete(User $user): View
     {
+        $this->authorize('delete', [User::class, $user]);
+
         return view('users.delete', compact(['user',]));
     }
 
@@ -139,9 +158,12 @@ class UserController extends Controller
 
     /**
      * Return view showing all users in the trash.
+     * @throws AuthorizationException
      */
     public function trash(): View
     {
+        $this->authorize('trash', [User::class]);
+
         $users = User::onlyTrashed()->orderBy('deleted_at')->paginate(5);
         return view('users.trash', compact(['users']));
     }
@@ -151,9 +173,12 @@ class UserController extends Controller
      *
      * @param $id
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function restore($id): RedirectResponse
     {
+        $this->authorize('restore', [User::class]);
+
         $user = User::onlyTrashed()->find($id);
         $user->restore();
         return redirect(route('users.trash'))
@@ -165,9 +190,12 @@ class UserController extends Controller
      *
      * @param $id
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function remove($id): RedirectResponse
     {
+        $this->authorize('remove', [User::class]);
+
         $user = User::onlyTrashed()->find($id);
         $oldUser = $user;
         $user->forceDelete();
@@ -180,9 +208,12 @@ class UserController extends Controller
      * Permanently remove all users that are in the trash
      *
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function empty(): RedirectResponse
     {
+        $this->authorize('empty', [User::class]);
+
         $users = User::onlyTrashed()->get();
         $trashCount = $users->count();
         foreach ($users as $user) {
@@ -196,9 +227,12 @@ class UserController extends Controller
      * Restore all users in the trash to system
      *
      * @return RedirectResponse
+     * @throws AuthorizationException
      */
     public function recoverAll(): RedirectResponse
     {
+        $this->authorize('recoverAll', [User::class]);
+
         $users = User::onlyTrashed()->get();
         $trashCount = $users->count();
 

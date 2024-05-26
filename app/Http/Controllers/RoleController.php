@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Permission;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Models\User;
@@ -12,7 +13,7 @@ use Illuminate\View\View;
 
 class RoleController extends Controller
 {
-    public static function middleware(): array
+    public function middleware($middleware, array $options = []): array
     {
         return [
             'role:Administrator|Staff',
@@ -31,14 +32,45 @@ class RoleController extends Controller
         });
     }
 
-
     /**
      * Display a list of all roles.
      */
     public function index(): View
     {
+        \abort_unless(auth()->user()->can(['Role-Browse']), '403',
+            'You do not have permission to view user Roles.');
+
         $roles = Role::all();
-        return view('roles.index', compact('roles'));
+        return view('roles.index', [
+            'roles' => $roles,
+            'canEdit' => auth()->user()->canAny(['Role-Edit', 'Role-Delete']),
+        ]);
+    }
+
+    /**
+     * Display the associated users of the specified role.
+     */
+    public function show(Role $role): View
+    {
+        \abort_unless(auth()->user()->can(['Role-Show']), '403',
+            'You do not have permission to view Role assignments.');
+
+        // user selector dropdown
+        $select = new User;
+        $select->id = 0;
+        $select->name = 'Please select';
+
+        $allUsers = User::withoutRole($role)
+            ->get();
+
+        $users = User::role($role->name)->get();
+
+        return view('roles.show', [
+            'role' => $role,
+            'users' => $users,
+            'allUsers' => $allUsers,
+            'canEdit' => auth()->user()->can(['Role-Assign', 'Role-Revoke']),
+        ]);
     }
 
     /**
@@ -46,6 +78,9 @@ class RoleController extends Controller
      */
     public function edit(Role $role): View
     {
+        \abort_unless(auth()->user()->can(['Role-Edit']), '403',
+            'You do not have permission to edit Role permissions.');
+
         $perms_user = DB::table('permissions')->where('name', 'like', 'User%')->get();
         $perms_listing = DB::table('permissions')->where('name', 'like', 'Listing%')->get();
         $perms_admin = DB::table('permissions')->where('name', 'like', 'Role%')->get();
@@ -70,8 +105,11 @@ class RoleController extends Controller
     /**
      * Update the specified role in storage.
      */
-    public function update(Request $request, Role $role)
+    public function update(Request $request, Role $role): RedirectResponse
     {
+        \abort_unless(auth()->user()->can(['Role-Edit']), '403',
+            'You do not have permission to edit Role permissions.');
+
         $validated = $request->validate([
             'name' => ['string', 'required'],
         ]);
@@ -88,45 +126,24 @@ class RoleController extends Controller
     /**
      * Remove the specified role from storage.
      */
-    public function destroy(Role $role)
+    public function destroy(Role $role): RedirectResponse
     {
+        \abort_unless(auth()->user()->can(['Role-Delete']), '403',
+            'You do not have permission to delete Roles.');
+
         $role->delete();
 
         return redirect(route('roles.index'))
             ->withSuccess("$role->name permanently deleted.");
     }
 
-
-    /**
-     * Display the associated users of the specified role.
-     */
-    public function show(Role $role): View
-    {
-        // user selector dropdown
-        $select = new User;
-        $select->id = 0;
-        $select->name = 'Please select';
-
-        $allUsers = User::withoutRole($role)
-            ->get();
-
-        $users = User::role($role->name)->get();
-
-        return view('roles.show', [
-            'role' => $role,
-            'users' => $users,
-            'allUsers' => $allUsers,
-            'canEdit' => auth()->user()->can(['Role-Assign', 'Role-Revoke']),
-        ]);
-    }
-
     /**
      * Assign the role to a user.
      */
-    public function assign_role(Request $request, Role $role)
+    public function assign_role(Request $request, Role $role): RedirectResponse
     {
         \abort_unless($request->user()->can(['Role-Assign']), '403',
-            'You do not have permission to make Role assignments.');
+            'You do not have permission to edit Role assignments.');
 
         $request->validate([
             'member_id' => 'exists:users,id'
@@ -134,7 +151,7 @@ class RoleController extends Controller
 
         $member = User::find($request->input('member_id'));
 
-        // session error if user already has role
+        // session error in case user already has role
         if ($member->hasRole($role)) {
             return back()->with('error', "$member->name already has this role.");
         }
@@ -149,10 +166,10 @@ class RoleController extends Controller
     /**
      * Remove the role from a user.
      */
-    public function revoke_role(Request $request, Role $role)
+    public function revoke_role(Request $request, Role $role): RedirectResponse
     {
         abort_unless($request->user()->can(['Role-Revoke']), '403',
-            'You do not have permission to change Role assignments.');
+            'You do not have permission to edit Role assignments.');
 
         $request->validate([
             'member_id' => 'exists:users,id'
@@ -160,7 +177,7 @@ class RoleController extends Controller
 
         $member = User::find($request->input('member_id'));
 
-        // redirect if user does not already have role
+        // redirect in case user does not already have role
         if (!$member->hasRole($role)) {
             return back()->with('error', "$member->name does not have this role.");
         }

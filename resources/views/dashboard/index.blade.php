@@ -83,69 +83,77 @@
             </h2>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <!-- roles -->
-                <div class="p-4 rounded-lg shadow-md bg-white">
-                    <div class="flex items-end gap-6 mb-6">
-                        <div class="p-4 bg-indigo-200 text-indigo-700 rounded-lg">
-                            <i class="fa-solid fa-user-gear text-5xl"></i>
+                @can('Role-Browse')
+                    <!-- roles -->
+                    <div class="p-4 rounded-lg shadow-md bg-white">
+                        <div class="flex items-end gap-6 mb-6">
+                            <div class="p-4 bg-indigo-200 text-indigo-700 rounded-lg">
+                                <i class="fa-solid fa-user-gear text-5xl"></i>
+                            </div>
+                            <h3 class="mb-2 text-xl font-semibold">Roles</h3>
                         </div>
-                        <h3 class="mb-2 text-xl font-semibold">Roles</h3>
-                    </div>
-                    <div class="h-px w-full bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
-                    <div class="flex justify-between mt-6">
-                        <p class="flex flex-col">
-                            <span class="font-bold"></span>
-                            <span class="text-gray-500 text-sm">Roles</span>
-                        </p>
-                        <a href="{{ route('roles.index') }}"
-                           class="flex items-center gap-4 px-5 py-2.5 shadow-sm rounded border text-base font-medium text-blue-600 hover:text-white dark:hover:text-black bg-blue-200 dark:bg-black hover:bg-blue-500 duration-300 ease-in-out transition-all">
-                            <span>View more</span>
-                            <i class="fa-solid fa-chevron-right"></i>
-                        </a>
-                    </div>
-                </div>
-                <!-- users -->
-                <div class="p-4 rounded-lg shadow-md bg-white">
-                    <div class="flex items-end gap-6 mb-6">
-                        <div class="p-4 bg-indigo-200 text-indigo-700 rounded-lg">
-                            <i class="fa fa-users text-5xl"></i>
+                        <div class="h-px w-full bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+                        <div class="flex justify-between mt-6">
+                            <p class="flex flex-col">
+                                <span class="font-bold"></span>
+                                <span class="text-gray-500 text-sm">Roles</span>
+                            </p>
+                            <a href="{{ route('roles.index') }}"
+                               class="flex items-center gap-4 px-5 py-2.5 shadow-sm rounded border text-base font-medium text-blue-600 hover:text-white dark:hover:text-black bg-blue-200 dark:bg-black hover:bg-blue-500 duration-300 ease-in-out transition-all">
+                                <span>View more</span>
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </a>
                         </div>
-                        <h3 class="mb-2 text-xl font-semibold">Users</h3>
                     </div>
-                    <div class="h-px w-full bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
-                    <div class="flex justify-between mt-6">
-                        <p class="flex flex-col">
-                            <span class="font-bold">{{ $usersCount }}</span>
-                            <span class="text-gray-500 text-sm">Users</span>
-                        </p>
-                        <a href="{{ route('users.index') }}"
-                           class="flex items-center gap-4 px-5 py-2.5 shadow-sm rounded border text-base font-medium text-blue-600 hover:text-white dark:hover:text-black bg-blue-200 dark:bg-black hover:bg-blue-500 duration-300 ease-in-out transition-all">
-                            <span>View more</span>
-                            <i class="fa-solid fa-chevron-right"></i>
-                        </a>
-                    </div>
-                </div>
-                <!-- listings-->
-                <div class="p-4 rounded-lg shadow-md bg-white">
-                    <div class="flex items-end gap-6 mb-6">
-                        <div class="p-4 bg-indigo-200 text-indigo-700 rounded-lg">
-                            <i class="fa-solid fa-list text-5xl"></i>
+                @endcan
+
+                @can('User-Browse')
+                    <!-- users -->
+                    <div class="p-4 rounded-lg shadow-md bg-white">
+                        <div class="flex items-end gap-6 mb-6">
+                            <div class="p-4 bg-indigo-200 text-indigo-700 rounded-lg">
+                                <i class="fa fa-users text-5xl"></i>
+                            </div>
+                            <h3 class="mb-2 text-xl font-semibold">Users</h3>
                         </div>
-                        <h3 class="mb-2 text-xl font-semibold">Listings</h3>
+                        <div class="h-px w-full bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+                        <div class="flex justify-between mt-6">
+                            <p class="flex flex-col">
+                                <span class="font-bold">{{ $usersCount }}</span>
+                                <span class="text-gray-500 text-sm">Users</span>
+                            </p>
+                            <a href="{{ route('users.index') }}"
+                               class="flex items-center gap-4 px-5 py-2.5 shadow-sm rounded border text-base font-medium text-blue-600 hover:text-white dark:hover:text-black bg-blue-200 dark:bg-black hover:bg-blue-500 duration-300 ease-in-out transition-all">
+                                <span>View more</span>
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </a>
+                        </div>
                     </div>
-                    <div class="h-px w-full bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
-                    <div class="flex justify-between mt-6">
-                        <p class="flex flex-col">
-                            <span class="font-bold">{{ $listingsCount }}</span>
-                            <span class="text-gray-500 text-sm">Listings</span>
-                        </p>
-                        <a href="{{ route('listings.index') }}"
-                           class="flex items-center gap-4 px-5 py-2.5 shadow-sm rounded border text-base font-medium text-blue-600 hover:text-white dark:hover:text-black bg-blue-200 dark:bg-black hover:bg-blue-500 duration-300 ease-in-out transition-all">
-                            <span>View more</span>
-                            <i class="fa-solid fa-chevron-right"></i>
-                        </a>
+                @endcan
+
+                @can('Listing-Browse')
+                    <!-- listings-->
+                    <div class="p-4 rounded-lg shadow-md bg-white">
+                        <div class="flex items-end gap-6 mb-6">
+                            <div class="p-4 bg-indigo-200 text-indigo-700 rounded-lg">
+                                <i class="fa-solid fa-list text-5xl"></i>
+                            </div>
+                            <h3 class="mb-2 text-xl font-semibold">Listings</h3>
+                        </div>
+                        <div class="h-px w-full bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
+                        <div class="flex justify-between mt-6">
+                            <p class="flex flex-col">
+                                <span class="font-bold">{{ $listingsCount }}</span>
+                                <span class="text-gray-500 text-sm">Listings</span>
+                            </p>
+                            <a href="{{ route('listings.index') }}"
+                               class="flex items-center gap-4 px-5 py-2.5 shadow-sm rounded border text-base font-medium text-blue-600 hover:text-white dark:hover:text-black bg-blue-200 dark:bg-black hover:bg-blue-500 duration-300 ease-in-out transition-all">
+                                <span>View more</span>
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </a>
+                        </div>
                     </div>
-                </div>
+                @endcan
             </div>
         </div>
     </div>

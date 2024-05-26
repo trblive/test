@@ -47,37 +47,47 @@
                         <td class="py-2 pl-2 flex-0 text-left">{{ $role->id }}</td>
                         <td class="py-2 pl-2 flex-0 text-left">{{ $role->name }}</td>
                         <td class="py-2 text-left">{{ $role->created_at }}</td>
+
                         <td class="py-2 pr-2 text-right">
-                            <form class="flex flex-row gap-2 items-center justify-end"
-                                  action="{{ route('roles.destroy', $role) }}"
-                                  method="post">
-                                @csrf
-                                @method('delete')
+                            @can('Role-Show')
+                                <form class="flex flex-row gap-2 items-center justify-end"
+                                      action="{{ route('roles.destroy', $role) }}"
+                                      method="post">
+                                    @csrf
+                                    @method('delete')
 
-                                <a href="{{ route('roles.show', $role) }}"
-                                   class="h-[36px] flex items-center gap-4 py-1 px-3 rounded-md
-                                          text-blue-600 hover:text-blue-200 dark:hover:text-black bg-blue-200 dark:bg-black hover:bg-blue-500
-                                          duration-300 ease-in-out transition-all">
-                                    <span>View Assignees</span>
-                                    <i class="fa-solid fa-chevron-right"></i>
-                                </a>
+                                    <a href="{{ route('roles.show', $role) }}"
+                                       class="h-[36px] flex items-center gap-4 py-1 px-3 rounded-md
+                                              text-blue-600 hover:text-blue-200 dark:hover:text-black bg-blue-200 dark:bg-black hover:bg-blue-500
+                                              duration-300 ease-in-out transition-all">
+                                        <span>View Assignees</span>
+                                        <i class="fa-solid fa-chevron-right"></i>
+                                    </a>
+                                    @endcan
+                                   
+                                    @if($canEdit)
+                                        @can('Role-Edit')
+                                            <a href="{{ route('roles.edit', $role) }}"
+                                               class="h-[36px] flex items-center gap-4 py-1 px-3 rounded-md
+                                                  text-purple-600 hover:text-purple-200 dark:hover:text-black bg-purple-200 dark:bg-black hover:bg-purple-500
+                                                  duration-300 ease-in-out transition-all">
+                                                <i class="fa fa-pen text-lg"></i>
+                                                <span>Edit</span>
+                                                <i class="fa-solid fa-chevron-right"></i>
+                                            </a>
+                                        @endcan
 
-                                <a href="{{ route('roles.edit', $role) }}"
-                                   class="h-[36px] flex items-center gap-4 py-1 px-3 rounded-md
-                                          text-purple-600 hover:text-purple-200 dark:hover:text-black bg-purple-200 dark:bg-black hover:bg-purple-500
-                                          duration-300 ease-in-out transition-all">
-                                    <i class="fa fa-pen text-lg"></i>
-                                    <span>Edit</span>
-                                    <i class="fa-solid fa-chevron-right"></i>
-                                </a>
-                                <button type="submit"
-                                        class="p-1 w-10 text-center rounded-md
-                                               text-red-600 hover:text-red-200 dark:hover:text-black bg-red-200 dark:bg-black hover:bg-red-500
-                                               duration-300 ease-in-out transition-all">
-                                    <i class="fa fa-trash text-lg"></i>
-                                    <span class="sr-only">Delete</span>
-                                </button>
-                            </form>
+                                        @can('Role-Delete')
+                                            <button type="submit"
+                                                    class="p-1 w-10 text-center rounded-md
+                                                   text-red-600 hover:text-red-200 dark:hover:text-black bg-red-200 dark:bg-black hover:bg-red-500
+                                                   duration-300 ease-in-out transition-all">
+                                                <i class="fa fa-trash text-lg"></i>
+                                                <span class="sr-only">Delete</span>
+                                            </button>
+                                        @endcan
+                                    @endif
+                                </form>
                         </td>
                     </tr>
                 @endforeach

@@ -9,7 +9,7 @@ use Spatie\Permission\PermissionRegistrar;
 
 class RoleAndPermissionSeeder extends Seeder
 {
-    private $permissions = [
+    private array $permissions = [
         'User-Browse', 'User-Show', 'User-Edit', 'User-Add', 'User-Delete', 'User-Trash-Recover', 'User-Trash-Remove', 'User-Trash-Empty', 'User-Trash-Restore',
 
         'Listing-Browse', 'Listing-Show', 'Listing-Edit', 'Listing-Add', 'Listing-Delete', 'Listing-Trash-Recover', 'Listing-Trash-Remove', 'Listing-Trash-Empty', 'Listing-Trash-Restore',
@@ -31,40 +31,27 @@ class RoleAndPermissionSeeder extends Seeder
 
         // create Administrator role
         $adminRole = Role::create(['name' => 'Administrator']);
-        $permissionsAll = Permission::pluck('id', 'id')->all();
-        $adminRole->syncPermissions($permissionsAll);
+        $adminRole->givePermissionTo([
+            'User-Browse', 'User-Show', 'User-Edit', 'User-Add', 'User-Delete', 'User-Trash-Recover', 'User-Trash-Remove', 'User-Trash-Empty', 'User-Trash-Restore',
+
+            'Listing-Browse', 'Listing-Show', 'Listing-Edit', 'Listing-Delete', 'Listing-Trash-Recover', 'Listing-Trash-Remove', 'Listing-Trash-Empty', 'Listing-Trash-Restore',
+
+            'Role-Assign', 'Role-Revoke', 'Role-Browse', 'Role-Show', 'Role-Edit', 'Role-Delete'
+        ]);
 
         // create Staff role
         $staffRole = Role::create(['name' => 'Staff']);
         $staffRole->givePermissionTo([
-            'User-Browse',
-            'User-Show',
-            'User-Edit',
-            'User-Add',
-            'User-Delete',
+            'User-Browse', 'User-Show', 'User-Edit', 'User-Add', 'User-Delete',
 
-            'Listing-Browse',
-            'Listing-Show',
-            'Listing-Edit',
-            'Listing-Delete',
-            'Listing-Trash-Recover',
-            'Listing-Trash-Remove',
+            'Listing-Browse', 'Listing-Show', 'Listing-Edit', 'Listing-Delete', 'Listing-Trash-Recover', 'Listing-Trash-Remove',
         ]);
 
         // create Client role
         $clientRole = Role::create(['name' => 'Client']);
         $clientRole->givePermissionTo([
-            'User-Show',
-            'User-Edit',
-            'User-Add',
-            'User-Delete',
 
-            'Listing-Browse',
-            'Listing-Show',
-            'Listing-Edit',
-            'Listing-Delete',
-            'Listing-Trash-Recover',
-            'Listing-Trash-Remove',
+            'Listing-Browse', 'Listing-Show', 'Listing-Add'
         ]);
     }
 }
