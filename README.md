@@ -4,10 +4,6 @@
 
 ### Assessment Task 2: Portfolio Pt. 2
 
----
-
-#### Built With
-
 [![PHP][Php.com]][Php-url]
 [![Laravel][Laravel.com]][Laravel-url]
 [![Tailwindcss][Tailwindcss.com]][Tailwindcss-url]
