@@ -27,9 +27,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/dashboard', [DashboardController::class, 'destroy'])->name('dashboard.destroy');
 });
 
-Route::middleware('auth')->group(function () {
+// roles and permissions
+Route::middleware(['auth', 'verified', 'role:Administrator|Staff'])->group(function () {
     Route::resource('roles', RoleController::class);
-
 
     Route::post('/roles/{role}/assign-role', [RoleController::class, 'assign_role'])->name('roles.assign-role');
     Route::delete('/roles/{role}/revoke-role', [RoleController::class, 'revoke_role'])->name('roles.revoke-role');
@@ -74,6 +74,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('listings', ListingController::class);
 });
 
+// roles and permissions (blackboard)
 Route::middleware(['auth', 'verified', 'role:Administrator|Staff'])->group(function () {
     Route::get('/permissions', [RolesAndPermissionsController::class, 'index'])
         ->name('admin.permissions');

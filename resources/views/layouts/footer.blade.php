@@ -38,16 +38,29 @@
 
         <!-- middle section -->
         <section class="md:col-span-3 gap-4 flex flex-wrap justify-center h-fit">
-            <img alt="Laravel Badge" src="https://img.shields.io/badge/Laravel-FF2D20?logo=laravel&logoColor=white"
+            <img alt="PHP Badge"
+                 src="https://img.shields.io/badge/Php-777BB4?style=for-the-badge&logo=php&logoColor=white"
+                 class="max-h-4 md:max-h-6">
+            <img alt="Laravel Badge"
+                 src="https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white"
                  class="max-h-4 md:max-h-6">
             <img alt="TailwindCSS Badge"
-                 src="https://img.shields.io/badge/Tailwindcss-06B6D4?logo=tailwindcss&logoColor=white"
+                 src="https://img.shields.io/badge/Tailwindcss-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white"
                  class="max-h-4 md:max-h-6">
             <img alt="SQLite Badge"
                  src="https://img.shields.io/badge/Sqlite-003B57?style=for-the-badge&logo=sqlite&logoColor=white"
                  class="max-h-4 md:max-h-6">
             <img alt="PhpStorm Badge"
-                 src="https://img.shields.io/badge/Phpstorm-000000?style=for-the-badge&logo=phpstorm&logoColor=white"
+                 src="https://img.shields.io/badge/PHPStorm-FF45ED?style=for-the-badge&logo=phpstorm&logoColor=white"
+                 class="max-h-4 md:max-h-6">
+            <img alt="Docker Badge"
+                 src="https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=docker&logoColor=white"
+                 class="max-h-4 md:max-h-6">
+            <img alt="Breeze Badge"
+                 src="https://img.shields.io/badge/Breeze-fcbe24?style=for-the-badge&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTGF5ZXJfMiIgZGF0YS1uYW1lPSJMYXllciAyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDY4IDY4Ij4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLmNscy0xIHsKICAgICAgICBmaWxsOiAjMzgzODM4OwogICAgICAgIHN0cm9rZS13aWR0aDogMHB4OwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik00MS44LDI2LjJsLTcuOCw3LjhoMTUuNmwtNy44LTcuOFpNMTguNSwzNGw3LjgsNy44LDcuOC03LjhoLTE1LjVaTTI2LjIsMjYuMmw3LjgsNy44di0xNS41bC03LjgsNy44Wk02OCwzNGMwLTkuMy0zLjgtMTcuOC05LjktMjMuOSwwLDAsMCwwLDAsMEM1MS45LDMuOCw0My40LDAsMzQsMCwxNS4yLDAsMCwxNS4yLDAsMzRzMy44LDE3LjksMTAsMjQuMWwxNS41LTE1LjYtOC41LTguNS03LTdWMTBsMTUuNSwxNS41LDguNS04LjVoMGMwLDAsNy02LjksNy02LjloMTdsLTE1LjUsMTUuNCw4LjYsOC41aDBjMCwwLDcuMSw3LjEsNy4xLDcuMXYxNi44YzYuMS02LjEsOS45LTE0LjYsOS45LTIzLjlaTTM0LDM0di0xNS41bC03LjgsNy44LDcuOCw3LjhaTTI2LjIsMjYuMmw3LjgsNy44di0xNS41bC03LjgsNy44Wk00Mi42LDQyLjZsLTguNiw4LjYtNyw3SDEwLjFjNi4xLDYuMSwxNC42LDkuOSwyMy45LDkuOXMxNy45LTMuOCwyNC0xMGwtMTUuNS0xNS41Wk0zNCwzNHYxNS42bDcuOC03LjgtNy44LTcuOFoiLz4KPC9zdmc%2B"
+                 class="max-h-4 md:max-h-6">
+            <img alt="Pest Badge"
+                 src="https://img.shields.io/badge/Pest-f471b5?style=for-the-badge&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0icGVzdCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA0NSAxMC4yIj4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLmNscy0xIHsKICAgICAgICBmaWxsOiAjZmZmOwogICAgICAgIHN0cm9rZS13aWR0aDogMHB4OwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xMS40LDIuOUMxMS42LDEuMywxMC42LDAsOSwwSDEuOGwtLjUsMi45aDcuMmwtLjIsMUgxLjFsLTEuMSw2LjNoMi45bC42LTMuNWg0LjNjMS42LDAsMy4xLTEuMywzLjQtMi45bC4yLTFaTTE5LjgsMy45aC03LjdsLS40LDIuNGg3LjZsLjUtMi40Wk0yMi45LDBoLTEwLjFsLS41LDIuOWgxMC4xTDIyLjksMFpNMTEsMTAuMmgxMC4xbC41LTIuOWgtMTAuMWwtLjUsMi45Wk0yNi44LDBDMjUuMiwwLDIzLjcsMS4zLDIzLjQsMi45di41YzAsMCwwLDAsMCwwLS4yLDEuNS44LDIuOSwyLjQsMi45aDQuM2wtLjIsMS4xaC03LjJsLS41LDIuOWg3LjJjMS42LDAsMy4xLTEuMywzLjQtMi45bC4yLTEuMWMuMy0xLjYtLjgtMi45LTIuNC0yLjloLTQuM3YtLjRoOS43bC0xLjMsNy4zaDIuOWwxLjMtNy4zaDIuOUM0My4yLDIuOSw0NC43LDEuNiw0NSwwaC0xOC4yWiIvPgo8L3N2Zz4%3D"
                  class="max-h-4 md:max-h-6">
             <img alt="NPM Badge"
                  src="https://img.shields.io/badge/Npm-CB3837?style=for-the-badge&logo=npm&logoColor=white"
@@ -55,11 +68,8 @@
             <img alt="Composer Badge"
                  src="https://img.shields.io/badge/Composer-885630?style=for-the-badge&logo=composer&logoColor=white"
                  class="max-h-4 md:max-h-6">
-            <img alt="Vite Badge"
-                 src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white"
-                 class="max-h-4 md:max-h-6">
-            <img alt="Laragon Badge"
-                 src="https://img.shields.io/badge/Laragon-0E83CD?style=for-the-badge&logo=laragon&logoColor=white"
+            <img alt="Spatie Badge"
+                 src="https://img.shields.io/badge/Spatie-197593?style=for-the-badge"
                  class="max-h-4 md:max-h-6">
         </section>
 
