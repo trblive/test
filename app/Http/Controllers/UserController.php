@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -20,13 +20,23 @@ class UserController extends Controller
     /**
      * Display a list of all registered users.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
         $this->authorize('viewAny', User::class);
 
-        $users = User::paginate(10);
+        $validated = $request->validate([
+            'search' => ['nullable', 'string', 'max:100'],
+        ]);
+
+        $search = $validated['search'] ?? null;
+        $users = User::whereAny(['name', 'email', 'city', 'state'], 'LIKE', "%$search%")->paginate(10);
+
+        if ($search) {
+            $users->appends(['search' => $search]);
+        }
         $trashedCount = User::onlyTrashed()->latest()->get()->count();
-        return view('users.index', compact(['users', 'trashedCount',]));
+
+        return view('users.index', compact(['users', 'trashedCount', 'search']));
 
     }
 

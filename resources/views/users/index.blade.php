@@ -18,11 +18,22 @@
         @endif
 
         <section class="px-4 pb-8">
-            <header class="flex flex-row justify-between items-center gap-2">
+            <header class="flex flex-row items-center gap-2">
                 <p class="font-semibold text-lg text-gray-800 dark:text-gray-200 leading-tight">
                     {{ __('Browse') }}
                 </p>
-                <section class="flex flex-row justify-between gap-4">
+
+
+                <section class="flex flex-row w-full justify-end items-center gap-4">
+                    <form action="{{ route('users.index') }}" method="get" class="flex flex-row items-center">
+                        <x-input-label for="Search" :value="__('Search')" class="sr-only mr-2"/>
+                        <x-text-input id="Search" name="search" type="text" :value="old('search')??$search"
+                                      class="mr-2 w-72"/>
+                        <button type="submit" class="rounded-md bg-neutral-500 text-neutral-100 p-2 px-4">
+                            {{ __('Search!') }}
+                        </button>
+                    </form>
+
                     <a href="{{ route('users.create') }}"
                        class="p-2 px-4 text-center rounded-md h-10
                               text-blue-600 hover:text-blue-200 bg-blue-200 hover:bg-blue-500
@@ -44,6 +55,7 @@
                     </a>
                 </section>
             </header>
+
 
             <table class="mt-4 table bg-white dark:bg-gray-800
                           overflow-hidden shadow-sm sm:rounded-lg
