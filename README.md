@@ -29,7 +29,6 @@
 - [Usage](#usage)
 - [Credits](#credits)
 - [Features](#features)
-- [Tests](#tests)
 - [Contact](#contact)
 - [Licence](#licence)
 
@@ -140,13 +139,6 @@ Job listings have the usual CRUD/BREAD operations including:
 * Listing BREAD [Administrator]
 * User BREAD [Administrator]
 * Roles and Permissions Admin [Administrator]
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-## Tests
-
-Go the extra mile and write tests for your application. Then provide examples on how to run them here.
-
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
